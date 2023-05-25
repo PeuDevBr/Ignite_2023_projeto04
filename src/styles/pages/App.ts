@@ -6,11 +6,5 @@ export const Container = styled('div', {
     alignItems: 'flex-start',
     justifyContent: 'center',
     minWidth: '100%',
-})
-
-export const Header = styled('div', {
-    padding: '2rem 0',
-    width: '100%',
-    maxWidth: 1100,
-    margin: '0 auto',
+    overflowX: 'hidden',
 })
