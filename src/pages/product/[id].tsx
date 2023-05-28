@@ -8,6 +8,7 @@ import axios from "axios"
 import { useContext, useState } from "react"
 import Head from "next/head"
 import { CartContext } from "../../context/cartContext"
+import { useRouter } from "next/router"
 
 interface ProductProps {
     product: {
@@ -22,6 +23,8 @@ interface ProductProps {
 
 export default function Product({ product } : ProductProps) {
 
+    const { isFallback } = useRouter()
+
      const {AddProduct, cartProducts} = useContext(CartContext); 
 
      function checkIfProductExistsInCart(id: string) {
@@ -32,6 +35,10 @@ export default function Product({ product } : ProductProps) {
             if(!checkIfProductExistsInCart(product.id)) {
                 AddProduct(product)
             }
+    }
+
+    if ( isFallback ) {
+        return <h3>Loading...</h3>
     }
  
     return (
@@ -65,7 +72,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths: [
             { params: { id: 'prod_NrNHH7UFHmNSoX'}}
         ],
-        fallback: 'blocking',
+        fallback: true,
+        /* fallback: 'blocking', */
     }
 }
 

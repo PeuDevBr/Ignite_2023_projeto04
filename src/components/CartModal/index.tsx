@@ -6,9 +6,6 @@ import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../../context/cartContext'
 import { formatPrice } from '../../util/format'
-import { GetStaticPaths, GetStaticProps } from 'next'
-import { stripe } from '../../lib/stripe'
-import Stripe from 'stripe'
 
 interface HomeProps {
     products: {
@@ -40,13 +37,14 @@ export default function CartModal() {
         updateCart(updateCartProducts)
       }
 
-
     async function handleBuyProduct() {
         try {
             setIsCreatingCheckoutSession(true);
 
+            const newProducts = cartProducts.map(({ defaultPriceId }) => ({ price: defaultPriceId, quantity: 1 }));
+
             const response = await axios.post(`/api/checkout`, {
-                priceId: product.defaultPriceId,
+                products: newProducts,
             })
 
             const { checkoutUrl} = response.data;
@@ -102,7 +100,7 @@ export default function CartModal() {
                             <span>{formatPrice(totalCartAmount)}</span>
                         </div>
                     </div>
-                    <button onClick={() => handleBuyProduct()}>Finalizar compra</button>
+                    <button disabled={isCreatingCheckoutSession || cartProducts.length === 0} onClick={() => handleBuyProduct()}>Finalizar compra</button>
                 </CheckoutContainer>
             </Content>
         </Dialog.Portal>

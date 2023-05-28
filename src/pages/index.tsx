@@ -22,7 +22,7 @@ interface HomeProps {
     imageUrl: string
     price: string
   }[]
-}
+} 
 
 export default function Home({products} : HomeProps) {
 

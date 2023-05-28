@@ -9,7 +9,18 @@ import CartModal from '../CartModal'
 import { Button } from '../../styles/components/CartButton'
 import { HandbagSimple } from 'phosphor-react'
 
-export default function Header() {
+/* interface ProductProps {
+  product: {
+    id: string
+    name: string
+    imageUrl: string
+    price: string
+    description: string
+    defaultPriceId: string
+  }
+} */
+
+export default function Header(/* { product } : ProductProps */) {
 
     return (
         <HeaderContent>
